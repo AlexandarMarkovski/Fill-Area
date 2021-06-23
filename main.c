@@ -59,11 +59,12 @@ int main()
 
     // Zanulqvane na suotvetnite koordinati
 
+    int count = 0;
+
     int x = 0;
     int y = 0;
-    scanf("%d %d", &x, &y);
+    scanf("%d %d", &y, &x);
 
-    // Obsht sluchei
     double avgMain = average(image[x][y].R, image[x][y].G, image[x][y].B);
     double avgAbove = average(image[x][y-1].R, image[x][y-1].G, image[x][y-1].B);
     double avgUnder = average(image[x][y+1].R, image[x][y+1].G, image[x][y+1].B);
@@ -72,28 +73,29 @@ int main()
 
     if(y - 1 >= 0){
        if(checkAverages(avgMain, avgAbove)){
-            image[x][y-1].R = 0; image[x][y-1].G = 0; image[x][y-1].B = 0;
+            image[x][y-1].R = 0; image[x][y-1].G = 0; image[x][y-1].B = 0; count++;
         }
     }
     if(y + 1 < sizeY){
         if(checkAverages(avgMain, avgUnder)){
-            image[x][y+1].R = 0; image[x][y+1].G = 0; image[x][y+1].B = 0;
+            image[x][y+1].R = 0; image[x][y+1].G = 0; image[x][y+1].B = 0; count++;
         }
     }
     if(x - 1 >= 0){
         if(checkAverages(avgMain, avgLeft)){
-            image[x-1][y].R = 0; image[x-1][y].G = 0; image[x-1][y].B = 0;
+            image[x-1][y].R = 0; image[x-1][y].G = 0; image[x-1][y].B = 0; count++;
         }
     }
     if(x + 1 < sizeX){
         if(checkAverages(avgMain, avgRight)){
-            image[x+1][y].R = 0; image[x+1][y].G = 0; image[x+1][y].B = 0;
+            image[x+1][y].R = 0; image[x+1][y].G = 0; image[x+1][y].B = 0; count++;
         }
     }
 
     image[x][y].R = 0;
     image[x][y].G = 0;
     image[x][y].B = 0;
+    count++;
 
     // Zapisvane na promenenite danni obratno vuv faila
 
@@ -104,6 +106,10 @@ int main()
             fprintf(file, "%d:%d:%d ", image[j][i].R, image[j][i].G, image[j][i].B);
         }
         fprintf(file, "\n");
+    }
+
+    for(int i = 0; i < count; i++){
+        fprintf(file, "         ");
     }
 
     fclose(file);
